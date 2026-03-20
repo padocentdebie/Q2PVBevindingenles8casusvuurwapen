@@ -25,8 +25,14 @@
         .work-container { display: flex; flex-direction: column; gap: 15px; overflow-y: auto; padding-right: 10px; }
         
         .oc-melding { background: #fff; padding: 15px; border-left: 5px solid var(--p-alert); font-family: 'Courier New', monospace; font-size: 0.85rem; border-top: 1px solid #ddd; line-height: 1.4; }
-        .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        video { width: 100%; border: 1px solid var(--p-blue); background: #000; }
+        
+        .video-stack { display: flex; flex-direction: column; gap: 15px; }
+        .video-wrapper { position: relative; background: #000; border: 1px solid var(--p-blue); }
+        .video-label { position: absolute; top: 5px; left: 10px; color: white; background: rgba(0,0,0,0.6); padding: 2px 8px; font-size: 0.7rem; z-index: 10; font-weight: bold; }
+        video { width: 100%; display: block; }
+        
+        #vid2-container { opacity: 0.3; pointer-events: none; transition: opacity 0.5s; }
+        #vid2-container.unlocked { opacity: 1; pointer-events: auto; }
 
         .pv-section { background: white; padding: 20px; border-top: 5px solid var(--p-blue); flex-grow: 1; display: flex; flex-direction: column; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         textarea { flex-grow: 1; width: 100%; padding: 15px; font-family: 'Courier New', monospace; font-size: 1rem; border: 1px solid #ccc; background: #fffdf5; resize: none; line-height: 1.5; }
@@ -56,20 +62,20 @@
         <div class="protocol-box">
             <span class="protocol-title">⚠️ OPERATIONEEL PROTOCOL:</span>
             <p style="font-size: 0.85rem; margin: 0; line-height: 1.4;">
-                Beschrijf het object op basis van uiterlijke kenmerken conform <strong>Art. 1 WWM</strong>.<br><br>
+                Analyseer de beelden. Beschrijf het object uitsluitend op basis van uiterlijke kenmerken conform <strong>Art. 1 WWM</strong>.<br><br>
                 <strong>STRICT VERBOD:</strong> Gebruik het woord <em>'vuurwapen'</em> <u>niet</u>.<br>
-                <strong>VERPLICHTE TERMEN:</strong>
+                <strong>VERPLICHTE TERMINOLOGIE:</strong>
                 <span class="term-list">LOOP - SLEDE - KAMER - KOLF - PATROONHOUDER</span>
             </p>
         </div>
-        <input type="text" id="firstname" placeholder="Voornaam Agent">
+        <input type="text" id="firstname" placeholder="Voornaam Aspirant">
         <select id="class-select">
             <option value="" disabled selected>Selecteer Eenheid...</option>
             <option>Alpha</option><option>Bravo</option><option>Charlie</option><option>Delta</option>
             <option>Echo</option><option>Foxtrot</option><option>Golf</option><option>Hotel</option>
             <option>Juliett</option><option>Kilo</option><option>Lima</option><option>Mike</option>
         </select>
-        <button class="btn-blue" style="width:100%;" onclick="init('student')">START PV OPSTELLING</button>
+        <button class="btn-blue" style="width:100%;" onclick="init('student')">START PV OPMARK</button>
         <button onclick="init('docent')" style="background:none; color:#bbb; border:none; margin-top:20px; cursor:pointer; font-size:0.6rem;">Commandant Login</button>
     </div>
 </div>
@@ -83,35 +89,42 @@
     <div class="work-container">
         <div class="oc-melding">
             <span style="color:var(--p-alert); font-weight:bold;">[OC MELDING] PRIO 1 - GEEN OGS</span><br>
-            CASSUS: Station Bijlmer Arena. Verdachte situatie met mogelijk wapenbezit.<br>
-            OPDRACHT: Stel PV Bevindingen op zonder de term 'vuurwapen' te gebruiken.
+            CASSUS: Station Bijlmer Arena. Observeer eerst 'Beeld 1' (Verdachte situatie). Daarna wordt 'Beeld 2' (Interventie) vrijgegeven voor de details.
         </div>
-        <div class="video-grid">
-            <video controls><source src="wwm.mp4" type="video/mp4"></video>
-            <video controls><source src="VD wwm.mp4" type="video/mp4"></video>
+
+        <div class="video-stack">
+            <div class="video-wrapper">
+                <div class="video-label">BEELD 1: VERDACHTE SITUATIE</div>
+                <video id="vid1" controls><source src="VD wwm.mp4" type="video/mp4"></video>
+            </div>
+            <div id="vid2-container" class="video-wrapper">
+                <div class="video-label">BEELD 2: INTERVENTIE / BODYCAM</div>
+                <video id="vid2" controls><source src="wwm.mp4" type="video/mp4"></video>
+            </div>
         </div>
+
         <div class="pv-section">
             <div class="box-header">PROCES-VERBAAL VAN BEVINDINGEN</div>
-            <textarea id="pv-input" placeholder="Wij, [Naam], agenten van politie Amsterdam..." oninput="sendData()"></textarea>
+            <textarea id="pv-input" oninput="sendData()"></textarea>
         </div>
     </div>
 
     <div class="sidebar">
         <div class="wet-box">
             <div class="box-header">WET WAPENS EN MUNITIE</div>
-            <p><strong>Art. 1 sub 3 (Definitie):</strong> Projectielen afschieten door loop middels scheikundige reactie.</p>
-            <p><strong>Kenmerken voor PV:</strong><br>
+            <p><strong>Art. 1 sub 3 (Definitie):</strong> Voorwerp bestemd projectielen door loop af te schieten middels scheikundige reactie.</p>
+            <p><strong>Essentiële onderdelen:</strong><br>
             - Loop (geleiding)<br>- Slede (bovenstuk)<br>- Kamer (laadruimte)<br>- Kolf (greep)<br>- Patroonhouder (magazijn)</p>
         </div>
         <div class="live-feed">
-            <div class="box-header">LIVE FEED EENHEDEN</div>
+            <div class="box-header">LIVE FEED ANALYSE</div>
             <div id="feed-content">...</div>
         </div>
     </div>
 </div>
 
 <div id="admin-bar" class="admin-controls hidden">
-    <button class="btn-danger" onclick="hardReset()">RESET DOSSIER (NIEUWE KLAS)</button>
+    <button class="btn-danger" onclick="hardReset()">RESET KLAS DATA</button>
 </div>
 
 <script>
@@ -130,14 +143,31 @@ const db = firebase.database();
 let currentUser = "";
 let isDocent = false;
 
+const v1 = document.getElementById('vid1');
+const v2 = document.getElementById('vid2');
+const v2Cont = document.getElementById('vid2-container');
+
+// VIDEO LOGICA
+v1.onended = function() {
+    v2Cont.classList.add('unlocked');
+    v2.play();
+    alert("BEELD 1 VOLTOOID. BEELD 2 IS NU BESCHIKBAAR VOOR ANALYSE.");
+};
+
 function init(role) {
     const fName = document.getElementById('firstname').value;
     const eKlas = document.getElementById('class-select').value;
-    if(!fName || !eKlas) return alert("Gegevens onvolledig.");
+    if(!fName || !eKlas) return alert("Identificatie onvolledig.");
+    
     currentUser = `${fName}-${eKlas}`;
     isDocent = (role === 'docent');
+    
+    // Placeholder instellen op basis van ingevoerde gegevens
+    const placeholderText = `Op dag [DAG], datum [DATUM], omstreeks [TIJDSTIP] uur, was ik, aspirant-agent van de eenheid ${eKlas}, werkzaam in de regio Amsterdam...`;
+    document.getElementById('pv-input').placeholder = placeholderText;
+
     document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('user-display').innerText = (isDocent ? "COMMANDANT: " : "AGENT: ") + currentUser.toUpperCase();
+    document.getElementById('user-display').innerText = (isDocent ? "COMMANDANT: " : "ASPIRANT: ") + currentUser.toUpperCase();
     if(isDocent) document.getElementById('admin-bar').classList.remove('hidden');
     db.ref('wwm_final/pvs').on('value', s => renderFeed(s.val()));
 }
@@ -159,9 +189,7 @@ function renderFeed(data) {
         div.innerHTML = `<strong>${entry.name}:</strong> ${entry.text.substring(0, 60)}...`;
         if(isDocent) {
             const btn = document.createElement('button');
-            btn.innerText = "FB";
-            btn.className = "btn-gold";
-            btn.style.fontSize = "0.6rem";
+            btn.innerText = "FB"; btn.className = "btn-gold"; btn.style.fontSize = "0.6rem";
             btn.style.marginLeft = "10px";
             btn.onclick = () => {
                 const fb = prompt("Feedback voor " + entry.name);
@@ -175,7 +203,7 @@ function renderFeed(data) {
 }
 
 function hardReset() {
-    if(confirm("Commandant, weet u zeker dat u het dossier wilt wissen voor een nieuwe klas?")) {
+    if(confirm("COMMANDANT: Alle dossierdata wissen?")) {
         db.ref('wwm_final').remove().then(() => location.reload());
     }
 }
