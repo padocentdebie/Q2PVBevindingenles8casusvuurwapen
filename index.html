@@ -15,14 +15,12 @@
         #login-screen { position: fixed; inset: 0; background: var(--p-blue); z-index: 1000; display: flex; align-items: center; justify-content: center; }
         .login-card { background: white; padding: 40px; width: 480px; border-radius: 2px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: center; }
         
-        .protocol-box { background: #fffdf5; border: 2px dashed var(--p-alert); padding: 15px; margin-bottom: 25px; text-align: left; }
-        
         input, select { padding: 12px; border: 1px solid #ccc; font-size: 1rem; width: 100%; box-sizing: border-box; margin-bottom: 15px; }
 
-        .main-layout { display: grid; grid-template-columns: 1fr 420px; gap: 20px; padding: 20px; height: calc(100vh - 120px); overflow: hidden; }
+        .main-layout { display: grid; grid-template-columns: 1fr 450px; gap: 20px; padding: 20px; height: calc(100vh - 120px); overflow: hidden; }
         .work-container { display: flex; flex-direction: column; gap: 15px; overflow-y: auto; }
         
-        .video-wrapper { position: relative; background: #000; border: 1px solid var(--p-blue); margin-bottom: 10px; }
+        .video-wrapper { position: relative; background: #000; border: 1px solid var(--p-blue); }
         .video-label { position: absolute; top: 5px; left: 10px; color: white; background: rgba(0,0,0,0.6); padding: 2px 8px; font-size: 0.7rem; z-index: 10; font-weight: bold; }
         video { width: 100%; display: block; }
         
@@ -30,24 +28,23 @@
         #vid2-container.unlocked { opacity: 1; pointer-events: auto; }
 
         .pv-section { background: white; padding: 20px; border-top: 5px solid var(--p-blue); flex-grow: 1; display: flex; flex-direction: column; }
-        textarea { flex-grow: 1; width: 100%; padding: 15px; font-family: 'Courier New', monospace; font-size: 1rem; border: 1px solid #ccc; background: #fffdf5; resize: none; }
+        textarea { flex-grow: 1; width: 100%; padding: 15px; font-family: 'Courier New', monospace; font-size: 1rem; border: 1px solid #ccc; background: #fffdf5; resize: none; line-height: 1.5; }
 
         .sidebar { display: flex; flex-direction: column; gap: 15px; height: 100%; overflow: hidden; }
         .wet-box, .live-feed { background: white; border: 1px solid #ddd; padding: 15px; overflow-y: auto; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         
-        .wet-box { height: 35%; font-size: 0.85rem; }
-        .live-feed { height: 65%; font-size: 0.82rem; border-left: 4px solid var(--p-gold); position: relative; }
+        .wet-box { height: 50%; font-size: 0.85rem; line-height: 1.6; }
+        .live-feed { height: 45%; font-size: 0.82rem; border-left: 4px solid var(--p-gold); }
 
         .box-header { font-weight: bold; color: var(--p-blue); border-bottom: 2px solid var(--p-gold); margin-bottom: 10px; padding-bottom: 5px; text-transform: uppercase; position: sticky; top: 0; background: white; z-index: 5; display: flex; justify-content: space-between; align-items: center; }
         
+        .wet-artikel { background: #f9f9f9; padding: 10px; border-left: 3px solid var(--p-blue); margin-bottom: 15px; }
         .feed-entry { border-bottom: 1px solid #eee; padding: 10px 0; }
-        .feedback-bubble { background: #f0f7ff; border-left: 3px solid var(--p-blue); padding: 8px; margin-top: 8px; font-style: italic; color: #1a2a3a; font-size: 0.78rem; position: relative; }
-        .timestamp { font-size: 0.65rem; color: #888; display: block; margin-top: 4px; }
+        .feedback-bubble { background: #f0f7ff; border-left: 3px solid var(--p-blue); padding: 8px; margin-top: 8px; font-style: italic; font-size: 0.78rem; }
 
-        button { padding: 6px 12px; cursor: pointer; border: none; font-weight: bold; text-transform: uppercase; font-size: 0.7rem; border-radius: 2px; }
+        button { padding: 6px 12px; cursor: pointer; border: none; font-weight: bold; text-transform: uppercase; border-radius: 2px; }
         .btn-gold { background: var(--p-gold); color: white; }
-        .btn-danger { background: var(--p-alert); color: white; padding: 4px 8px; font-size: 0.6rem; }
-        .hidden { display: none; }
+        .btn-danger { background: var(--p-alert); color: white; font-size: 0.65rem; }
     </style>
 </head>
 <body>
@@ -55,9 +52,6 @@
 <div id="login-screen">
     <div class="login-card">
         <h2 style="color:var(--p-blue);">SYSTEEM LOGIN | LES 9</h2>
-        <div class="protocol-box">
-            <p style="font-size: 0.85rem; margin: 0;"><strong>INSTRUCTIE:</strong> Analyseer de beelden. Geef feedback in de feed. Gebruik de resetknop om het dossier te legen voor een nieuwe ronde.</p>
-        </div>
         <input type="text" id="firstname" placeholder="Voornaam Aspirant">
         <select id="class-select">
             <option value="" disabled selected>Selecteer Eenheid...</option>
@@ -77,30 +71,56 @@
     <div class="work-container">
         <div class="video-stack">
             <div class="video-wrapper">
-                <div class="video-label">BEELD 1</div>
+                <div class="video-label">BEELD 1: OBSERVATIE</div>
                 <video id="vid1" controls preload="auto"><source src="VD wwm.mp4" type="video/mp4"></video>
             </div>
             <div id="vid2-container" class="video-wrapper">
-                <div class="video-label">BEELD 2</div>
+                <div class="video-label">BEELD 2: DETAIL-ANALYSE</div>
                 <video id="vid2" controls preload="metadata"><source src="Filmpje_wwm.mp4" type="video/mp4"></video>
             </div>
         </div>
         <div class="pv-section">
-            <div class="box-header">MIJN PROCES-VERBAAL</div>
+            <div class="box-header">MIJN PROCES-VERBAAL VAN BEVINDINGEN</div>
             <textarea id="pv-input" oninput="sendData()"></textarea>
         </div>
     </div>
 
     <div class="sidebar">
         <div class="wet-box">
-            <div class="box-header">WET WAPENS EN MUNITIE</div>
-            <p><strong>Art. 1 sub 3:</strong> Voorwerp bestemd projectielen door loop af te schieten middels scheikundige reactie.</p>
-            <p><strong>Onderdelen:</strong> Loop, Slede, Kamer, Kolf, Patroonhouder.</p>
+            <div class="box-header">WET WAPENS EN MUNITIE (WWM)</div>
+            
+            <div class="wet-artikel">
+                <strong>Artikel 1, sub 3</strong><br>
+                Vuurwapen: een voorwerp dat bestemd is om projectielen of stoffen door een loop af te schieten, waarvan de werking berust op het teweegbrengen van een scheikundige ontploffing of een andere scheikundige reactie.
+            </div>
+
+            <div class="wet-artikel">
+                <strong>Artikel 2 (Categorie-indeling)</strong><br>
+                - <strong>Categorie I:</strong> Blank wapen, verboden (stiletto, werpmes).<br>
+                - <strong>Categorie II:</strong> Krijgsmachtwapens, pepperspray, stroomstootwapen.<br>
+                - <strong>Categorie III:</strong> Pistolen, revolvers en geweren.<br>
+                - <strong>Categorie IV:</strong> Lucht/gasdrukwapens, zwaarden, bogen.
+            </div>
+
+            <div class="wet-artikel" style="border-left: 3px solid var(--p-alert); background: #fff5f5;">
+                <strong>AANVULLENDE INSTRUCTIE</strong><br>
+                Beschrijving van de betrokkenen is noodzakelijk. Het is momenteel onbekend wie het voorwerp (het vuurwapen) feitelijk in bezit heeft. Observeer de interactie nauwkeurig.
+            </div>
+
+            <div class="wet-artikel">
+                <strong>Aanwijzingen Omschrijving</strong><br>
+                Beschrijf objectief (Art. 1 WWM):<br>
+                1. <strong>Loop:</strong> Aanwezigheid en vorm.<br>
+                2. <strong>Slede:</strong> Bovenstuk van het object.<br>
+                3. <strong>Kamer:</strong> Waar de munitie wordt geladen.<br>
+                4. <strong>Kolf:</strong> De handgreep.<br>
+                5. <strong>Patroonhouder:</strong> Het magazijn.
+            </div>
         </div>
 
         <div class="live-feed">
             <div class="box-header">
-                LIVE FEED
+                LIVE FEED & PEER-FB
                 <button class="btn-danger" onclick="hardReset()">RESET DATA</button>
             </div>
             <div id="feed-content">Laden...</div>
@@ -134,7 +154,7 @@ function init() {
     if(!fName || !eKlas) return alert("Invoer onvolledig.");
     
     currentUser = `${fName}-${eKlas}`;
-    document.getElementById('pv-input').placeholder = `Op dag [DAG], datum [DATUM] was ik, aspirant-agent van de eenheid ${eKlas}...`;
+    document.getElementById('pv-input').placeholder = `Op dag [DAG], datum [DATUM] was ik, aspirant-agent van de eenheid ${eKlas}, werkzaam in de regio Amsterdam...`;
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('user-display').innerText = currentUser.toUpperCase();
     
@@ -148,13 +168,11 @@ function sendData() {
 }
 
 function addFeedback(targetKey) {
-    const msg = prompt("Voer feedback in voor deze collega:");
+    const msg = prompt("Voer feedback in voor collega:");
     if(msg) {
-        const now = new Date().toLocaleTimeString('nl-NL', {hour: '2-digit', minute:'2-digit'});
         db.ref(`wwm_final/pvs/${targetKey}`).update({
             feedback: msg,
-            feedbackBy: currentUser,
-            fbTime: now
+            feedbackBy: currentUser
         });
     }
 }
@@ -168,13 +186,12 @@ function renderFeed(data) {
         const div = document.createElement('div');
         div.className = 'feed-entry';
         div.innerHTML = `
-            <button class="btn-gold" style="font-size:0.55rem; float:right;" onclick="addFeedback('${key}')">FB</button>
+            <button class="btn-gold" style="font-size:0.5rem; float:right;" onclick="addFeedback('${key}')">FB</button>
             <strong>${entry.name}:</strong><br>
-            ${entry.text.substring(0, 100)}...
+            ${entry.text.substring(0, 80)}...
             ${entry.feedback ? `
                 <div class="feedback-bubble">
                     <strong>${entry.feedbackBy}:</strong> "${entry.feedback}"
-                    <span class="timestamp">${entry.fbTime}</span>
                 </div>` : ''}
         `;
         cont.prepend(div);
@@ -182,7 +199,7 @@ function renderFeed(data) {
 }
 
 function hardReset() {
-    if(confirm("LET OP: Dit wist alle gegevens van alle studenten. Doorgaan?")) {
+    if(confirm("Lethale Actie: Weet u zeker dat u alle dossierdata wilt wissen?")) {
         db.ref('wwm_final').remove().then(() => location.reload());
     }
 }
