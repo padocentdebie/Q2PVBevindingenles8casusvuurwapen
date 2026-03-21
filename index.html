@@ -16,41 +16,37 @@
         .login-card { background: white; padding: 40px; width: 480px; border-radius: 2px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: center; }
         
         .protocol-box { background: #fffdf5; border: 2px dashed var(--p-alert); padding: 15px; margin-bottom: 25px; text-align: left; }
-        .protocol-title { color: var(--p-alert); font-weight: bold; text-transform: uppercase; font-size: 0.9rem; display: block; margin-bottom: 8px; }
-        .term-list { font-family: 'Courier New', monospace; font-size: 0.85rem; background: #eee; padding: 8px; display: block; margin-top: 5px; border: 1px solid #ccc; color: #000; }
         
-        input, select { padding: 12px; border: 1px solid #ccc; font-size: 1rem; width: 100%; box-sizing: border-box; margin-bottom: 15px; background: #fafafa; }
+        input, select { padding: 12px; border: 1px solid #ccc; font-size: 1rem; width: 100%; box-sizing: border-box; margin-bottom: 15px; }
 
-        .main-layout { display: grid; grid-template-columns: 1fr 380px; gap: 20px; padding: 20px; height: calc(100vh - 120px); overflow: hidden; }
-        .work-container { display: flex; flex-direction: column; gap: 15px; overflow-y: auto; padding-right: 10px; }
+        .main-layout { display: grid; grid-template-columns: 1fr 420px; gap: 20px; padding: 20px; height: calc(100vh - 120px); overflow: hidden; }
+        .work-container { display: flex; flex-direction: column; gap: 15px; overflow-y: auto; }
         
-        .oc-melding { background: #fff; padding: 15px; border-left: 5px solid var(--p-alert); font-family: 'Courier New', monospace; font-size: 0.85rem; border-top: 1px solid #ddd; line-height: 1.4; }
-        
-        .video-stack { display: flex; flex-direction: column; gap: 15px; }
-        .video-wrapper { position: relative; background: #000; border: 1px solid var(--p-blue); }
+        .video-wrapper { position: relative; background: #000; border: 1px solid var(--p-blue); margin-bottom: 10px; }
         .video-label { position: absolute; top: 5px; left: 10px; color: white; background: rgba(0,0,0,0.6); padding: 2px 8px; font-size: 0.7rem; z-index: 10; font-weight: bold; }
         video { width: 100%; display: block; }
         
         #vid2-container { opacity: 0.3; pointer-events: none; transition: opacity 0.5s; }
         #vid2-container.unlocked { opacity: 1; pointer-events: auto; }
 
-        .pv-section { background: white; padding: 20px; border-top: 5px solid var(--p-blue); flex-grow: 1; display: flex; flex-direction: column; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        textarea { flex-grow: 1; width: 100%; padding: 15px; font-family: 'Courier New', monospace; font-size: 1rem; border: 1px solid #ccc; background: #fffdf5; resize: none; line-height: 1.5; }
+        .pv-section { background: white; padding: 20px; border-top: 5px solid var(--p-blue); flex-grow: 1; display: flex; flex-direction: column; }
+        textarea { flex-grow: 1; width: 100%; padding: 15px; font-family: 'Courier New', monospace; font-size: 1rem; border: 1px solid #ccc; background: #fffdf5; resize: none; }
 
-        .sidebar { display: flex; flex-direction: column; gap: 15px; height: 100%; }
+        .sidebar { display: flex; flex-direction: column; gap: 15px; height: 100%; overflow: hidden; }
         .wet-box, .live-feed { background: white; border: 1px solid #ddd; padding: 15px; overflow-y: auto; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .wet-box { height: 320px; font-size: 0.85rem; line-height: 1.4; }
-        .box-header { font-weight: bold; color: var(--p-blue); border-bottom: 2px solid var(--p-gold); margin-bottom: 10px; padding-bottom: 5px; text-transform: uppercase; font-size: 0.75rem; }
         
-        .live-feed { flex-grow: 1; font-size: 0.85rem; }
-        .feed-entry { border-bottom: 1px solid #eee; padding: 10px 0; }
-        .feedback-text { color: var(--p-alert); font-weight: bold; margin-top: 5px; display: block; font-style: italic; }
+        .wet-box { height: 35%; font-size: 0.85rem; }
+        .live-feed { height: 65%; font-size: 0.82rem; border-left: 4px solid var(--p-gold); position: relative; }
 
-        .admin-controls { background: var(--p-blue); padding: 10px; display: flex; justify-content: center; border-top: 1px solid #000; gap: 20px; }
-        button { padding: 10px 25px; cursor: pointer; border: none; font-weight: bold; text-transform: uppercase; font-size: 0.8rem; border-radius: 2px; }
-        .btn-blue { background: #34495e; color: white; }
+        .box-header { font-weight: bold; color: var(--p-blue); border-bottom: 2px solid var(--p-gold); margin-bottom: 10px; padding-bottom: 5px; text-transform: uppercase; position: sticky; top: 0; background: white; z-index: 5; display: flex; justify-content: space-between; align-items: center; }
+        
+        .feed-entry { border-bottom: 1px solid #eee; padding: 10px 0; }
+        .feedback-bubble { background: #f0f7ff; border-left: 3px solid var(--p-blue); padding: 8px; margin-top: 8px; font-style: italic; color: #1a2a3a; font-size: 0.78rem; position: relative; }
+        .timestamp { font-size: 0.65rem; color: #888; display: block; margin-top: 4px; }
+
+        button { padding: 6px 12px; cursor: pointer; border: none; font-weight: bold; text-transform: uppercase; font-size: 0.7rem; border-radius: 2px; }
         .btn-gold { background: var(--p-gold); color: white; }
-        .btn-danger { background: var(--p-alert); color: white; }
+        .btn-danger { background: var(--p-alert); color: white; padding: 4px 8px; font-size: 0.6rem; }
         .hidden { display: none; }
     </style>
 </head>
@@ -58,25 +54,17 @@
 
 <div id="login-screen">
     <div class="login-card">
-        <h2 style="margin-top:0; color:var(--p-blue);">SYSTEEM LOGIN | LES 9</h2>
+        <h2 style="color:var(--p-blue);">SYSTEEM LOGIN | LES 9</h2>
         <div class="protocol-box">
-            <span class="protocol-title">⚠️ OPERATIONEEL PROTOCOL:</span>
-            <p style="font-size: 0.85rem; margin: 0; line-height: 1.4;">
-                Analyseer de beelden. Beschrijf het object uitsluitend op basis van uiterlijke kenmerken conform <strong>Art. 1 WWM</strong>.<br><br>
-                <strong>STRICT VERBOD:</strong> Gebruik het woord <em>'vuurwapen'</em> <u>niet</u>.<br>
-                <strong>VERPLICHTE TERMINOLOGIE:</strong>
-                <span class="term-list">LOOP - SLEDE - KAMER - KOLF - PATROONHOUDER</span>
-            </p>
+            <p style="font-size: 0.85rem; margin: 0;"><strong>INSTRUCTIE:</strong> Analyseer de beelden. Geef feedback in de feed. Gebruik de resetknop om het dossier te legen voor een nieuwe ronde.</p>
         </div>
         <input type="text" id="firstname" placeholder="Voornaam Aspirant">
         <select id="class-select">
             <option value="" disabled selected>Selecteer Eenheid...</option>
             <option>Alpha</option><option>Bravo</option><option>Charlie</option><option>Delta</option>
-            <option>Echo</option><option>Foxtrot</option><option>Golf</option><option>Hotel</option>
-            <option>Juliett</option><option>Kilo</option><option>Lima</option><option>Mike</option>
+            <option>Echo</option><option>Foxtrot</option>
         </select>
-        <button class="btn-blue" style="width:100%;" onclick="init('student')">START PV OPMARK</button>
-        <button onclick="init('docent')" style="background:none; color:#bbb; border:none; margin-top:20px; cursor:pointer; font-size:0.6rem;">Commandant Login</button>
+        <button class="btn-gold" style="width:100%;" onclick="init()">START DOSSIER</button>
     </div>
 </div>
 
@@ -87,24 +75,18 @@
 
 <div class="main-layout">
     <div class="work-container">
-        <div class="oc-melding">
-            <span style="color:var(--p-alert); font-weight:bold;">[OC MELDING] PRIO 1 - GEEN OGS</span><br>
-            CASSUS: Station Bijlmer Arena. Observeer eerst 'Beeld 1' (Verdachte situatie). Daarna wordt 'Beeld 2' (Interventie) vrijgegeven voor de details.
-        </div>
-
         <div class="video-stack">
             <div class="video-wrapper">
-                <div class="video-label">BEELD 1: VERDACHTE SITUATIE</div>
-                <video id="vid1" controls><source src="VD wwm.mp4" type="video/mp4"></video>
+                <div class="video-label">BEELD 1</div>
+                <video id="vid1" controls preload="auto"><source src="VD wwm.mp4" type="video/mp4"></video>
             </div>
             <div id="vid2-container" class="video-wrapper">
-                <div class="video-label">BEELD 2: INTERVENTIE / BODYCAM</div>
-                <video id="vid2" controls><source src="wwm.mp4" type="video/mp4"></video>
+                <div class="video-label">BEELD 2</div>
+                <video id="vid2" controls preload="metadata"><source src="Filmpje_wwm.mp4" type="video/mp4"></video>
             </div>
         </div>
-
         <div class="pv-section">
-            <div class="box-header">PROCES-VERBAAL VAN BEVINDINGEN</div>
+            <div class="box-header">MIJN PROCES-VERBAAL</div>
             <textarea id="pv-input" oninput="sendData()"></textarea>
         </div>
     </div>
@@ -112,19 +94,18 @@
     <div class="sidebar">
         <div class="wet-box">
             <div class="box-header">WET WAPENS EN MUNITIE</div>
-            <p><strong>Art. 1 sub 3 (Definitie):</strong> Voorwerp bestemd projectielen door loop af te schieten middels scheikundige reactie.</p>
-            <p><strong>Essentiële onderdelen:</strong><br>
-            - Loop (geleiding)<br>- Slede (bovenstuk)<br>- Kamer (laadruimte)<br>- Kolf (greep)<br>- Patroonhouder (magazijn)</p>
+            <p><strong>Art. 1 sub 3:</strong> Voorwerp bestemd projectielen door loop af te schieten middels scheikundige reactie.</p>
+            <p><strong>Onderdelen:</strong> Loop, Slede, Kamer, Kolf, Patroonhouder.</p>
         </div>
+
         <div class="live-feed">
-            <div class="box-header">LIVE FEED ANALYSE</div>
-            <div id="feed-content">...</div>
+            <div class="box-header">
+                LIVE FEED
+                <button class="btn-danger" onclick="hardReset()">RESET DATA</button>
+            </div>
+            <div id="feed-content">Laden...</div>
         </div>
     </div>
-</div>
-
-<div id="admin-bar" class="admin-controls hidden">
-    <button class="btn-danger" onclick="hardReset()">RESET KLAS DATA</button>
 </div>
 
 <script>
@@ -141,34 +122,22 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
 let currentUser = "";
-let isDocent = false;
-
 const v1 = document.getElementById('vid1');
 const v2 = document.getElementById('vid2');
 const v2Cont = document.getElementById('vid2-container');
 
-// VIDEO LOGICA
-v1.onended = function() {
-    v2Cont.classList.add('unlocked');
-    v2.play();
-    alert("BEELD 1 VOLTOOID. BEELD 2 IS NU BESCHIKBAAR VOOR ANALYSE.");
-};
+v1.onended = () => { v2Cont.classList.add('unlocked'); v2.play(); };
 
-function init(role) {
+function init() {
     const fName = document.getElementById('firstname').value;
     const eKlas = document.getElementById('class-select').value;
-    if(!fName || !eKlas) return alert("Identificatie onvolledig.");
+    if(!fName || !eKlas) return alert("Invoer onvolledig.");
     
     currentUser = `${fName}-${eKlas}`;
-    isDocent = (role === 'docent');
-    
-    // Placeholder instellen op basis van ingevoerde gegevens
-    const placeholderText = `Op dag [DAG], datum [DATUM], omstreeks [TIJDSTIP] uur, was ik, aspirant-agent van de eenheid ${eKlas}, werkzaam in de regio Amsterdam...`;
-    document.getElementById('pv-input').placeholder = placeholderText;
-
+    document.getElementById('pv-input').placeholder = `Op dag [DAG], datum [DATUM] was ik, aspirant-agent van de eenheid ${eKlas}...`;
     document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('user-display').innerText = (isDocent ? "COMMANDANT: " : "ASPIRANT: ") + currentUser.toUpperCase();
-    if(isDocent) document.getElementById('admin-bar').classList.remove('hidden');
+    document.getElementById('user-display').innerText = currentUser.toUpperCase();
+    
     db.ref('wwm_final/pvs').on('value', s => renderFeed(s.val()));
 }
 
@@ -176,6 +145,18 @@ function sendData() {
     db.ref(`wwm_final/pvs/${currentUser.replace(/[.#$/[\]]/g, "_")}`).update({
         name: currentUser, text: document.getElementById('pv-input').value
     });
+}
+
+function addFeedback(targetKey) {
+    const msg = prompt("Voer feedback in voor deze collega:");
+    if(msg) {
+        const now = new Date().toLocaleTimeString('nl-NL', {hour: '2-digit', minute:'2-digit'});
+        db.ref(`wwm_final/pvs/${targetKey}`).update({
+            feedback: msg,
+            feedbackBy: currentUser,
+            fbTime: now
+        });
+    }
 }
 
 function renderFeed(data) {
@@ -186,24 +167,22 @@ function renderFeed(data) {
         const entry = data[key];
         const div = document.createElement('div');
         div.className = 'feed-entry';
-        div.innerHTML = `<strong>${entry.name}:</strong> ${entry.text.substring(0, 60)}...`;
-        if(isDocent) {
-            const btn = document.createElement('button');
-            btn.innerText = "FB"; btn.className = "btn-gold"; btn.style.fontSize = "0.6rem";
-            btn.style.marginLeft = "10px";
-            btn.onclick = () => {
-                const fb = prompt("Feedback voor " + entry.name);
-                if(fb) db.ref(`wwm_final/pvs/${key}`).update({ feedback: fb });
-            };
-            div.appendChild(btn);
-        }
-        if(entry.feedback) div.innerHTML += `<br><span class="feedback-text">FB: ${entry.feedback}</span>`;
+        div.innerHTML = `
+            <button class="btn-gold" style="font-size:0.55rem; float:right;" onclick="addFeedback('${key}')">FB</button>
+            <strong>${entry.name}:</strong><br>
+            ${entry.text.substring(0, 100)}...
+            ${entry.feedback ? `
+                <div class="feedback-bubble">
+                    <strong>${entry.feedbackBy}:</strong> "${entry.feedback}"
+                    <span class="timestamp">${entry.fbTime}</span>
+                </div>` : ''}
+        `;
         cont.prepend(div);
     });
 }
 
 function hardReset() {
-    if(confirm("COMMANDANT: Alle dossierdata wissen?")) {
+    if(confirm("LET OP: Dit wist alle gegevens van alle studenten. Doorgaan?")) {
         db.ref('wwm_final').remove().then(() => location.reload());
     }
 }
