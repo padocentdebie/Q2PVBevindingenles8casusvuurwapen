@@ -27,7 +27,7 @@
         #vid2-container { opacity: 0.3; pointer-events: none; transition: opacity 0.5s; }
         #vid2-container.unlocked { opacity: 1; pointer-events: auto; }
 
-        .pv-section { background: white; padding: 20px; border-top: 5px solid var(--p-blue); flex-grow: 1; display: flex; flex-direction: column; }
+        .pv-section { background: white; padding: 20px; border-top: 5px solid var(--p-blue); flex-grow: 1; display: flex; flex-direction: column; min-height: 300px; }
         textarea { flex-grow: 1; width: 100%; padding: 15px; font-family: 'Courier New', monospace; font-size: 1rem; border: 1px solid #ccc; background: #fffdf5; resize: none; line-height: 1.5; }
 
         .sidebar { display: flex; flex-direction: column; gap: 15px; height: 100%; overflow: hidden; }
@@ -39,11 +39,17 @@
         .box-header { font-weight: bold; color: var(--p-blue); border-bottom: 2px solid var(--p-gold); margin-bottom: 10px; padding-bottom: 5px; text-transform: uppercase; position: sticky; top: 0; background: white; z-index: 5; display: flex; justify-content: space-between; align-items: center; }
         
         .wet-artikel { background: #f9f9f9; padding: 10px; border-left: 3px solid var(--p-blue); margin-bottom: 15px; }
-        .feed-entry { border-bottom: 1px solid #eee; padding: 10px 0; }
-        .feedback-bubble { background: #f0f7ff; border-left: 3px solid var(--p-blue); padding: 8px; margin-top: 8px; font-style: italic; font-size: 0.78rem; }
+        .feed-entry { border-bottom: 2px solid var(--p-blue); padding: 15px 0; margin-bottom: 10px; }
+        .feed-text { background: #fcfcfc; padding: 10px; border: 1px inset #eee; white-space: pre-wrap; margin: 5px 0; font-family: 'Courier New', monospace; font-size: 0.8rem; }
+        
+        .feedback-container { margin-top: 10px; background: #f0f7ff; padding: 10px; border-radius: 4px; }
+        .feedback-bubble { border-bottom: 1px solid #d0e0f0; padding: 5px 0; font-style: italic; font-size: 0.78rem; }
+        .feedback-input-group { display: flex; gap: 5px; margin-top: 8px; }
+        .fb-input { padding: 5px; font-size: 0.75rem; border: 1px solid #ccc; flex-grow: 1; margin-bottom: 0; }
 
         button { padding: 6px 12px; cursor: pointer; border: none; font-weight: bold; text-transform: uppercase; border-radius: 2px; }
         .btn-gold { background: var(--p-gold); color: white; }
+        .btn-blue { background: var(--p-blue); color: white; font-size: 0.65rem; }
         .btn-danger { background: var(--p-alert); color: white; font-size: 0.65rem; }
     </style>
 </head>
@@ -55,8 +61,10 @@
         <input type="text" id="firstname" placeholder="Voornaam Aspirant">
         <select id="class-select">
             <option value="" disabled selected>Selecteer Eenheid...</option>
-            <option>Alpha</option><option>Bravo</option><option>Charlie</option><option>Delta</option>
-            <option>Echo</option><option>Foxtrot</option>
+            <option>Alpha</option><option>Bravo</option><option>Charlie</option>
+            <option>Delta</option><option>Echo</option><option>Foxtrot</option>
+            <option>Golf</option><option>Hotel</option><option>Juliet</option>
+            <option>Kilo</option><option>Lima</option><option>Mike</option>
         </select>
         <button class="btn-gold" style="width:100%;" onclick="init()">START DOSSIER</button>
     </div>
@@ -120,8 +128,8 @@
 
         <div class="live-feed">
             <div class="box-header">
-                LIVE FEED & PEER-FB
-                <button class="btn-danger" onclick="hardReset()">RESET DATA</button>
+                LIVE FEED & COLLEGA FEEDBACK
+                <button class="btn-danger" onclick="hardReset()">RESET</button>
             </div>
             <div id="feed-content">Laden...</div>
         </div>
@@ -163,38 +171,58 @@ function init() {
 
 function sendData() {
     db.ref(`wwm_final/pvs/${currentUser.replace(/[.#$/[\]]/g, "_")}`).update({
-        name: currentUser, text: document.getElementById('pv-input').value
+        name: currentUser, 
+        text: document.getElementById('pv-input').value,
+        timestamp: Date.now()
     });
 }
 
-function addFeedback(targetKey) {
-    const msg = prompt("Voer feedback in voor collega:");
-    if(msg) {
-        db.ref(`wwm_final/pvs/${targetKey}`).update({
-            feedback: msg,
-            feedbackBy: currentUser
-        });
-    }
+function submitFeedback(targetKey) {
+    const inputField = document.getElementById(`fb-input-${targetKey}`);
+    const msg = inputField.value;
+    if(!msg) return;
+
+    const fbRef = db.ref(`wwm_final/pvs/${targetKey}/feedbacks`).push();
+    fbRef.set({
+        msg: msg,
+        by: currentUser,
+        time: Date.now()
+    }).then(() => {
+        inputField.value = "";
+    });
 }
 
 function renderFeed(data) {
     const cont = document.getElementById('feed-content');
     cont.innerHTML = "";
     if(!data) return;
-    Object.keys(data).forEach(key => {
+
+    const sortedKeys = Object.keys(data).sort((a, b) => (data[b].timestamp || 0) - (data[a].timestamp || 0));
+
+    sortedKeys.forEach(key => {
         const entry = data[key];
         const div = document.createElement('div');
         div.className = 'feed-entry';
+        
+        let fbHtml = "";
+        if(entry.feedbacks) {
+            Object.values(entry.feedbacks).forEach(fb => {
+                fbHtml += `<div class="feedback-bubble"><strong>${fb.by}:</strong> ${fb.msg}</div>`;
+            });
+        }
+
         div.innerHTML = `
-            <button class="btn-gold" style="font-size:0.5rem; float:right;" onclick="addFeedback('${key}')">FB</button>
-            <strong>${entry.name}:</strong><br>
-            ${entry.text.substring(0, 80)}...
-            ${entry.feedback ? `
-                <div class="feedback-bubble">
-                    <strong>${entry.feedbackBy}:</strong> "${entry.feedback}"
-                </div>` : ''}
+            <strong>${entry.name}:</strong>
+            <div class="feed-text">${entry.text}</div>
+            <div class="feedback-container">
+                <div id="fb-list-${key}">${fbHtml}</div>
+                <div class="feedback-input-group">
+                    <input type="text" class="fb-input" id="fb-input-${key}" placeholder="Schrijf feedback...">
+                    <button class="btn-blue" onclick="submitFeedback('${key}')">OK</button>
+                </div>
+            </div>
         `;
-        cont.prepend(div);
+        cont.appendChild(div);
     });
 }
 
